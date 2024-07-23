@@ -1,9 +1,2 @@
-# editors
-*.swp
-*~
-*
-
-# build
 /build*/
-/.vscode
-/src/acceleration.code-workspace
+.vscode/
