@@ -10,7 +10,6 @@
 #define POLL_IN 0
 #define POLL_OUT 1
 
-
 union received_msg {
   uint16_t integer;
   uint8_t bytes[2];

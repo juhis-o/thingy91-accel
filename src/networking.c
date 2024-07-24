@@ -42,7 +42,7 @@ int connect_to_server(void){
 
 bool check_list(uint16_t x, uint8_t msg_index) {
 	bool send = (x & (1u << msg_index) ? true : false);
-	return send; 
+	return send;
 }
 
 uint8_t getmsgCount(uint16_t x) {
@@ -64,6 +64,7 @@ void coap_send_fn(struct k_work * work) {
 	t = (msg_index == 1) ? 0 : 1;
     int64_t next_msg_time = COAP_TIMEOUT;
 	union received_msg recv_payload = {0};
+	bool reconnected = false;
 
 	for(int i = 0; i < (PAYLOAD_COUNT / 10);) {
 		for(uint8_t x = 0; x < (LAST_MSG + 1);) {
@@ -83,10 +84,10 @@ void coap_send_fn(struct k_work * work) {
 				if(tries < 3) {
 					tries++;
 					continue;
-				}
+				} 
 				else {
-					LOG_ERR("Failed %d times, quitting...",tries);
-					return;
+					LOG_ERR("Failed %d times, restarting device...",tries);
+					NVIC_SystemReset();
 				}
             }
 			err = wait(next_msg_time, msg_type);
@@ -96,9 +97,21 @@ void coap_send_fn(struct k_work * work) {
 					tries++;
 					continue;
 				}
+				else if(tries == 4 && !reconnected) {
+					LOG_ERR("Reconnecting...");
+					err = connect_to_server();
+					if(err) {
+						LOG_ERR("Cannot connect to server. Restarting device");
+						NVIC_SystemReset();
+					}
+					else {
+						reconnected = true;
+						continue;
+					}
+				}
 				else {
 					LOG_ERR("Failed %d times, quitting...",tries);
-					return;
+					NVIC_SystemReset();
 				}
 			}
 			x++;
@@ -137,7 +150,6 @@ void coap_send_fn(struct k_work * work) {
 			}
 		}
 	}
-
 }
 
 /**@brief Resolves the configured hostname. */
