@@ -1,3 +1,6 @@
+#ifndef SENSORS_H
+#define SENSORS_H
+
 #include <zcbor_common.h>
 #include <zephyr/device.h>
 #include <zephyr/drivers/sensor.h>
@@ -13,3 +16,5 @@ int cbor_bit_width(long int number);
 int cbor_bit_width_timestamp(uint64_t number);
 void trigger_handler(const struct device *dev, const struct sensor_trigger *trig);
 int initialize_sensors(void);
+
+#endif //SENSORS_H

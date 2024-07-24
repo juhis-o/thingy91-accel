@@ -1,3 +1,6 @@
+#ifndef NETWORKING_H
+#define NETWORKING_H
+
 #include <zephyr/net/coap.h>
 #include <zephyr/net/socket.h>
 #include <zephyr/random/random.h>
@@ -23,3 +26,5 @@ void coap_send_fn(struct k_work * work);
 int client_handle_get_response(uint8_t *buf, int received,uint8_t *pload);
 int client_get_send(uint8_t * payload, uint16_t payloadSize, bool msg_type, uint16_t token);
 bool check_list(uint16_t x, uint8_t msg_index);
+
+#endif //NETWORKING_H
