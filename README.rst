@@ -1,33 +1,21 @@
-.. _hello_world:
-
-Hello World
+Thingy-91 optimized acceleration measurement final theses.
 ###########
 
 Overview
 ********
 
-A simple sample that can be used with any :ref:`supported board <boards>` and
-prints "Hello World" to the console.
+This Thingy:91 application has been optimized for efficient acceleration measurement by utilizing ADXL362 FIFO feature, various compression methods and lightweight CoAP protocol with DTLS encryption.
 
 Building and Running
 ********************
 
-This application can be built and executed on QEMU as follows:
+Firmware can be built with Nordic Connect toolchain version 2.6.1. Building this firmware for older or newer versions of Nordic Connect toolchains may require modifying various files.
 
-.. zephyr-app-commands::
-   :zephyr-app: samples/hello_world
-   :host-os: unix
-   :board: qemu_x86
-   :goals: run
-   :compact:
+ncsFolder contains files, which are to be replaced files in Nordic Connect toolchain. These files enables FIFO-support for Zephyr ADXL362 accelerometer driver, which is not normally available.
 
-To build for another board, change "qemu_x86" above to that board's name.
 
-Sample Output
-=============
+Link to nRF Connect.
+https://www.nordicsemi.com/Products/Development-tools/nRF-Connect-for-Desktop
 
-.. code-block:: console
-
-    Hello World! x86
-
-Exit QEMU by pressing :kbd:`CTRL+A` :kbd:`x`.
+With nRF connect, install nRF Connect SDK v2.6.1 with Toolchain manager tool.
+Instructions for replacing driver files can be found in ncsFiles folder.
